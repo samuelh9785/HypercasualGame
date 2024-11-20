@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5947890877775077310}
+  - component: {fileID: 4726256065480957440}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -31,8 +32,28 @@ Transform:
   - {fileID: 9181802536262947176}
   - {fileID: 8189812770573537605}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4726256065480957440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139920851497488263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0009f8ef9ea887438abb43f079f6057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hand: {fileID: 6209155749451289906}
+  body: {fileID: 0}
+  sword: {fileID: 0}
+  moveSpeed: 20
+  rotationSpeed: 5
+  swipeThresholdDistance: 500
+  swipeTimeThreshold: 0.05
+  attackDuration: 0.2
 --- !u!1 &2969994882193790516
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +118,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3a48cfd8053bb014b8e350b9f140f235, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -231,7 +252,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b5ddbd4f7c6ea874bbf8d6b7483ec0da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -336,7 +357,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3a48cfd8053bb014b8e350b9f140f235, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -366,6 +387,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8189812770573537605}
     m_Modifications:
+    - target: {fileID: 3251570008722166730, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b5ddbd4f7c6ea874bbf8d6b7483ec0da, type: 2}
+    - target: {fileID: 4865256374579259872, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5399277321343773195, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}
       propertyPath: m_Name
       value: Sword
@@ -417,8 +446,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3728997707031335189, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1648639173515464627}
   m_SourcePrefab: {fileID: 100100000, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}
+--- !u!1 &3326513318864620513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3728997707031335189, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}
+  m_PrefabInstance: {fileID: 2155581093327231732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1648639173515464627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3326513318864620513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9bc62778995594a9462ddc76a1100e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8255545250862411906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8033224637926107766, guid: 0f0323003464b0f4ebab8037896ad6be, type: 3}

@@ -4,8 +4,12 @@ using UnityEngine;
 
 namespace Com.SamuelHOARAU.Hypercasual
 {
+    public delegate void OnHitHandler(bool hit);
+
     public class Sword : MonoBehaviour
     {
+        public event OnHitHandler OnHit;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -16,6 +20,11 @@ namespace Com.SamuelHOARAU.Hypercasual
         void Update()
         {
 
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("Hit");
         }
     }
 }
