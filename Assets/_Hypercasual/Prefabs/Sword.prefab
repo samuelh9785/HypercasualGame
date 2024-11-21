@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 5543570097662515248}
   - component: {fileID: 4036207820382965419}
   - component: {fileID: 4865256374579259872}
+  - component: {fileID: 4945706589913288860}
   m_Layer: 0
   m_Name: Blade
   m_TagString: Untagged
@@ -267,12 +268,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4945706589913288860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3728997707031335189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9bc62778995594a9462ddc76a1100e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bladeCollider: {fileID: 4865256374579259872}
 --- !u!1 &5399277321343773195
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b5ddbd4f7c6ea874bbf8d6b7483ec0da, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

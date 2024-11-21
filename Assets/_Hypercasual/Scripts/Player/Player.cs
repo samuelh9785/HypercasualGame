@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace Com.SamuelHOARAU.Hypercasual
@@ -7,7 +6,7 @@ namespace Com.SamuelHOARAU.Hypercasual
     public class Player : MonoBehaviour
     {
         [SerializeField] private GameObject hand = default;
-        [SerializeField] private GameObject body = default;
+        [SerializeField] public GameObject body = default;
         [SerializeField] private Sword sword = default;
 
         [SerializeField] private float moveSpeed = 5f;
@@ -23,16 +22,12 @@ namespace Com.SamuelHOARAU.Hypercasual
 
         public static Player Instance { get; private set; }
 
-        private Vector3 startPosition;
-        private Vector3 endPosition;
         private Vector3 worldPosition;
         private Vector3 center;
+        private Vector3 closestPointOnEllipse;
 
-        private Quaternion targetRotation;
-        private Quaternion initialRotation;
-
-        private float distance;
-        private float currentDuration;
+        private float failDuration = 0.5f;
+        private float failElapsedTime;
 
         private event Action DoAction;
 
@@ -73,16 +68,11 @@ namespace Com.SamuelHOARAU.Hypercasual
 
         private void OnHit_HitTarget(bool hit)
         {
-            if (hit)
+            if (!hit)
             {
-
+                sword.DisableCollider();
+                SetModeFail();
             }
-            else
-            {
-
-            }
-
-            throw new NotImplementedException();
         }
 
         private void SetModeVoid()
@@ -104,6 +94,36 @@ namespace Com.SamuelHOARAU.Hypercasual
         {
             MoveHand();
             RotateHand();
+        }
+
+        private void SetModeFail()
+        {
+            DoAction = DoActionFail;
+
+            Vector3 offset = hand.transform.position - center;
+            float angle = Mathf.Atan2(offset.y / radiusY, offset.x / radiusX);
+
+            closestPointOnEllipse = center + new Vector3(Mathf.Cos(angle) * radiusX,
+                                                         Mathf.Sin(angle) * radiusY,
+                                                         0f);
+
+            failElapsedTime = 0f;
+        }
+
+        private void DoActionFail()
+        {
+            RotateHand();
+
+            failElapsedTime += Time.deltaTime;
+            float ratio = Mathf.Clamp01(failElapsedTime / failDuration);
+
+            hand.transform.position = Vector3.Lerp(hand.transform.position, closestPointOnEllipse, ratio);
+
+            if (ratio >= 1f)
+            {
+                sword.EnableCollider();
+                SetModeMove();
+            }
         }
 
         // Update is called once per frame
