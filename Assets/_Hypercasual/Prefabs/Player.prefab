@@ -47,13 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hand: {fileID: 6209155749451289906}
-  body: {fileID: 0}
-  sword: {fileID: 0}
+  body: {fileID: 2969994882193790516}
+  sword: {fileID: 1648639173515464627}
   moveSpeed: 20
-  rotationSpeed: 5
+  rotationSpeed: 20
   swipeThresholdDistance: 500
   swipeTimeThreshold: 0.05
   attackDuration: 0.2
+  radiusX: 1
+  radiusY: 1.2
 --- !u!1 &2969994882193790516
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,19 +18,21 @@ namespace Com.SamuelHOARAU.Hypercasual
 
         [SerializeField] private float attackDuration = 0.5f;
 
+        [SerializeField] private float radiusX = 1f;
+        [SerializeField] private float radiusY = 1.2f;
+
         public static Player Instance { get; private set; }
 
         private Vector3 startPosition;
         private Vector3 endPosition;
         private Vector3 worldPosition;
+        private Vector3 center;
 
         private Quaternion targetRotation;
         private Quaternion initialRotation;
 
         private float distance;
         private float currentDuration;
-
-        private Coroutine checkSwipe;
 
         private event Action DoAction;
 
@@ -48,6 +50,7 @@ namespace Com.SamuelHOARAU.Hypercasual
         // Start is called before the first frame update
         public void Start()
         {
+            center = hand.transform.position;
             worldPosition = hand.transform.position;
             SetModeMove();
 
@@ -95,45 +98,12 @@ namespace Com.SamuelHOARAU.Hypercasual
         private void SetModeMove()
         {
             DoAction = DoActionMove;
-
-            CheckSwipeInput();
         }
 
         private void DoActionMove()
         {
             MoveHand();
             RotateHand();
-
-            CheckSwipeInput();
-        }
-
-        private void SetModeAttack()
-        {
-            DoAction = DoActionAttack;
-
-            StopCoroutine(checkSwipe);
-            checkSwipe = null;
-
-            currentDuration = 0;
-            initialRotation = hand.transform.rotation;
-
-            Quaternion rotationX = new Quaternion(1,0, 0, 0);
-
-            targetRotation = initialRotation * rotationX;
-        }
-
-        private void DoActionAttack()
-        {
-            MoveHand();
-
-            float ratio = currentDuration / attackDuration;
-
-            hand.transform.rotation = Quaternion.Slerp(initialRotation, targetRotation, ratio);
-
-            if (currentDuration < attackDuration)
-                currentDuration += Time.deltaTime;
-            else
-                SetModeMove();
         }
 
         // Update is called once per frame
@@ -144,12 +114,32 @@ namespace Com.SamuelHOARAU.Hypercasual
 
         private void MoveHand()
         {
+            Vector3 offset;
+            Vector3 mousePosition;
+
+            float distanceX;
+            float distanceY;
+            float angle;
+
             if (Input.GetMouseButton(0))
             {
-                Vector3 mousePosition = Input.mousePosition;
+                mousePosition = Input.mousePosition;
                 mousePosition.z = Mathf.Abs(Camera.main.transform.position.z - hand.transform.position.z);
 
                 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            }
+
+            offset = worldPosition - center;
+            distanceX = offset.x / radiusX;
+            distanceY = offset.y / radiusY;
+
+            if (distanceX * distanceX + distanceY * distanceY > 1f)
+            {
+                angle = Mathf.Atan2(offset.y, offset.x);
+
+                worldPosition = center + new Vector3(Mathf.Cos(angle) * radiusX,
+                                                     Mathf.Sin(angle) * radiusY,
+                                                     0f);
             }
 
             hand.transform.position = Vector3.Lerp(hand.transform.position, new Vector3(worldPosition.x, worldPosition.y, hand.transform.position.z), Time.deltaTime * moveSpeed);
@@ -157,55 +147,35 @@ namespace Com.SamuelHOARAU.Hypercasual
 
         private void RotateHand()
         {
-            Vector3 handScreenPosition = Camera.main.WorldToScreenPoint(hand.transform.position);
+            Vector3 offset = hand.transform.position - center;
+            Vector3 ellipseForward = Vector3.forward;
+            Vector3 radialDirection;
+            Vector3 targetDirection;
 
-            Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, handScreenPosition.z);
-            Vector3 directionToCenter = handScreenPosition - screenCenter;
+            float distanceX = offset.x / radiusX;
+            float distanceY = offset.y / radiusY;
+            float distanceSquared = distanceX * distanceX + distanceY * distanceY;
+            float angle;
+            float distanceToCenterRatio;
 
-            Vector3 targetScreenPosition = screenCenter + directionToCenter.normalized * Mathf.Max(Screen.width, Screen.height);
-            Vector3 targetWorldPosition = Camera.main.ScreenToWorldPoint(targetScreenPosition);
-            Vector3 direction = (targetWorldPosition - hand.transform.position).normalized;
 
-            Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, direction);
+            if (distanceSquared < 0.01f)
+            {
+                hand.transform.up = Vector3.Slerp(hand.transform.up, ellipseForward, Time.deltaTime * rotationSpeed);
+                return;
+            }
 
-            // Interpolation fluide vers la rotation cible
-            hand.transform.rotation = Quaternion.Slerp(hand.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            angle = Mathf.Atan2(offset.y / radiusY, offset.x / radiusX);
 
-            //hand.transform.up = direction;
+            radialDirection = new Vector3(Mathf.Cos(angle) * radiusX,
+                                          Mathf.Sin(angle) * radiusY,
+                                          0f).normalized;
+
+            distanceToCenterRatio = Mathf.Clamp01(Mathf.Sqrt(distanceSquared));
+            targetDirection = Vector3.Slerp(ellipseForward, radialDirection, distanceToCenterRatio);
+
+            hand.transform.up = Vector3.Slerp(hand.transform.up, targetDirection, Time.deltaTime * rotationSpeed);
         }
 
-        private IEnumerator CheckSwipe()
-        {
-            while (true)
-            {
-                startPosition = Input.mousePosition;
-                startPosition.z = 0;
-
-                yield return new WaitForSeconds(swipeTimeThreshold);
-
-                endPosition = Input.mousePosition;
-                endPosition.z = 0;
-
-                distance = Vector3.Distance(endPosition, startPosition);
-
-                if (distance > swipeThresholdDistance)
-                {
-                    SetModeAttack();
-                }
-            }
-        }
-
-        private void CheckSwipeInput()
-        {
-            if (Input.GetMouseButton(0))
-            {
-                if (checkSwipe == null) checkSwipe = StartCoroutine(CheckSwipe());
-            }
-            else
-            {
-                if (checkSwipe != null) StopCoroutine(checkSwipe);
-                checkSwipe = null;
-            }
-        }
     }
 }
