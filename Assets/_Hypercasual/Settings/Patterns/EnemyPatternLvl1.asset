@@ -79,10 +79,10 @@ MonoBehaviour:
     - armorUp: 0
       armorBottom: 0
       armorLeft: 1
-      armorRight: 1
+      armorRight: 0
     - armorUp: 0
       armorBottom: 0
-      armorLeft: 1
+      armorLeft: 0
       armorRight: 1
   - listEnemyArmor:
     - armorUp: 1

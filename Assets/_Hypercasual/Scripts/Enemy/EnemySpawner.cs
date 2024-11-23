@@ -29,6 +29,8 @@ namespace Com.SamuelHOARAU.Hypercasual
         private void SetModeVoid()
         {
             DoAction = DoActionVoid;
+
+            BPMManager.Instance.OnBPM -= OnBPM_CheckSpawn;
         }
 
         private void DoActionVoid()
@@ -57,6 +59,11 @@ namespace Com.SamuelHOARAU.Hypercasual
                 currentBPM = 0;
                 SpawnEnemy();
             }
+        }
+
+        public void StopSpawner()
+        {
+            SetModeVoid();
         }
 
         private void SpawnEnemy()

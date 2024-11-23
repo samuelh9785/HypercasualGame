@@ -25,7 +25,7 @@ namespace Com.SamuelHOARAU.Hypercasual
         private float spawnDuration = 0.5f;
 
         private float despawnTime = 0f;
-        private float despawnDuration = 1f;
+        private float despawnDuration = 0.5f;
 
         private event Action DoAction;
         

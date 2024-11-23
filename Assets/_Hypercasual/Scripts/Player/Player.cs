@@ -1,10 +1,14 @@
+using Com.SamuelHOARAU.Common.Shakes;
 using System;
 using UnityEngine;
+
 
 namespace Com.SamuelHOARAU.Hypercasual
 {
     public class Player : MonoBehaviour
     {
+        [SerializeField] private ShakeSetting shakeSetting;
+
         [SerializeField] private GameObject hand = default;
         [SerializeField] public GameObject body = default;
         [SerializeField] private Sword sword = default;
@@ -20,6 +24,9 @@ namespace Com.SamuelHOARAU.Hypercasual
         [SerializeField] private float radiusX = 1f;
         [SerializeField] private float radiusY = 1.2f;
 
+        [SerializeField] private AnimationCurve failCurve;
+
+
         public static Player Instance { get; private set; }
 
         private Vector3 worldPosition;
@@ -28,6 +35,8 @@ namespace Com.SamuelHOARAU.Hypercasual
 
         private float failDuration = 0.5f;
         private float failElapsedTime;
+
+        private Shake screenShake;
 
         private event Action DoAction;
 
@@ -108,6 +117,9 @@ namespace Com.SamuelHOARAU.Hypercasual
                                                          0f);
 
             failElapsedTime = 0f;
+
+            if (screenShake == null) screenShake = new Shake(this, Camera.main.transform, shakeSetting, true).Play();
+            else screenShake.Stop().Play();
         }
 
         private void DoActionFail()
@@ -117,7 +129,7 @@ namespace Com.SamuelHOARAU.Hypercasual
             failElapsedTime += Time.deltaTime;
             float ratio = Mathf.Clamp01(failElapsedTime / failDuration);
 
-            hand.transform.position = Vector3.Lerp(hand.transform.position, closestPointOnEllipse, ratio);
+            hand.transform.position = Vector3.Lerp(hand.transform.position, closestPointOnEllipse, failCurve.Evaluate(ratio));
 
             if (ratio >= 1f)
             {
@@ -196,6 +208,5 @@ namespace Com.SamuelHOARAU.Hypercasual
 
             hand.transform.up = Vector3.Slerp(hand.transform.up, targetDirection, Time.deltaTime * rotationSpeed);
         }
-
     }
 }

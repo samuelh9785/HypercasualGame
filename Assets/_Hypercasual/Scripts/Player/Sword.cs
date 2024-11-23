@@ -35,7 +35,6 @@ namespace Com.SamuelHOARAU.Hypercasual
 
             if (other.CompareTag("Shield"))
             {
-                Debug.Log("Fail");
                 OnHit?.Invoke(false);
             }
         }

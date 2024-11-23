@@ -10,7 +10,7 @@ namespace Com.SamuelHOARAU.Common.Shakes
         private ShakeSetting setting;
         private Coroutine coroutine;
         private bool isLocal;
-        private Vector2 startPosition;
+        private Vector3 startPosition;
 
         /// <summary>
         /// Short for "new Shake(caster, camera.main.transform, setting, isLocal).Play()"
@@ -98,14 +98,18 @@ namespace Com.SamuelHOARAU.Common.Shakes
             startPosition = isLocal ? target.localPosition : target.position;
             Vector2 driver = Random.insideUnitCircle;
 
+            Vector2 noiseCalcul;
+
             while(timer < setting.Duration)
             {
                 ratio = timer / setting.Duration;
 
+                noiseCalcul = Noise(driver, setting.Bidirectionnal) * (setting.Magnitude * setting.CurvePosition(ratio));
+
                 if (isLocal)
-                    target.localPosition = startPosition + Noise(driver, setting.Bidirectionnal) * (setting.Magnitude * setting.CurvePosition(ratio));
+                    target.localPosition = startPosition + new Vector3(noiseCalcul.x, noiseCalcul.y, 0);
                 else
-                    target.position = startPosition + Noise(driver, setting.Bidirectionnal) * (setting.Magnitude * setting.CurvePosition(ratio));
+                    target.position = startPosition + new Vector3(noiseCalcul.x, noiseCalcul.y, 0);
 
                 driver += Vector2.one * (setting.Frequency * Time.deltaTime);
                 timer += Time.deltaTime;

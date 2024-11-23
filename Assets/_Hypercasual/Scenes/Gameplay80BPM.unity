@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 555229627}
   - component: {fileID: 555229626}
+  - component: {fileID: 555229628}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -152,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb21b5eea68c33a47871d186d3b2c7f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 60
+  bpm: 80
 --- !u!4 &555229627
 Transform:
   m_ObjectHideFlags: 0
@@ -168,6 +169,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555229628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555229625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a42b869e4d7cc884d971aab6590a93f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 1949901342}
+  menuScene: Menu
 --- !u!1 &1071509138
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +693,58 @@ PrefabInstance:
     - target: {fileID: 2139920851497488263, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: shakeSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: d394c5a9f291fc8449f8cd68bb2863fd, type: 2}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[1].time
+      value: 0.1450274
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[2].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[1].value
+      value: 0.9582392
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[2].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[0].inSlope
+      value: 3.216392
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[1].inSlope
+      value: 0.12714377
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[0].outSlope
+      value: 3.216392
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[1].outSlope
+      value: 0.12714377
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[0].outWeight
+      value: 0.025664525
+      objectReference: {fileID: 0}
+    - target: {fileID: 4726256065480957440, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
+      propertyPath: failCurve.m_Curve.Array.data[1].outWeight
+      value: 0.058722705
       objectReference: {fileID: 0}
     - target: {fileID: 5947890877775077310, guid: 7fd26862d6d969f4a828bbf796d86f58, type: 3}
       propertyPath: m_RootOrder
